@@ -2,12 +2,12 @@
 Code and scripts created while working through the book "Ansible for DevOps" by Jeff Geerling  
 
 # Set up
-Install Vagrant and virtualbox on windows
-Install Vagrant (same version as windows) in wsl
-Install ansible in wsl
+Install Vagrant and virtualbox on windows  
+Install Vagrant (same version as windows) in wsl  
+Install ansible in wsl  
 
 Add following to ~/.bashrc in wsl:  
-Note - "/c" for me is usually "/mnt/c"
+Note - "/c" for me is usually "/mnt/c"  
 
 ```
 export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
