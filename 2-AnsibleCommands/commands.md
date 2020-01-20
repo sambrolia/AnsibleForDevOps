@@ -50,3 +50,59 @@ ansible app -b -a "service ntpd restart" --limit "192.168.60.4"
 ansible app -b -a "service ntpd restart" --limit "*.4"
 ansible app -b -a "service ntpd restart" --limit ~".*\.4"
 ```
+
+```
+# Add an admin group on app servers
+ansible app -b -m group -a "name=admin state=present"
+
+# Add a user to the group (with or without ssh key)
+ansible app -b -m user -a "name=johndoe group=admin createhome=yes"
+ansible app -b -m user -a "name=johndoe group=admin createhome=yes generate_ssh_key=yes"
+
+# Remove the user
+ansible app -b -m user -a "name=johndoe state=absent remove=yes"
+```
+
+```
+# Manage packages
+ansible app -b -m package -a "name=git state=present"
+```
+
+```
+# Get information about a file
+ansible multi -m stat -a "path=/etc/environment"
+
+# Copy a file to the servers
+ansible multi -m copy -a "src=/etc/hosts dest=/tmp/hosts"
+
+# Retrive a file from the servers and put them in /tmp/{IP_ADDRESS}/etc/hosts
+ansible multi -b -m fetch -a "src=/etc/hosts dest=/tmp"
+
+# Retrive a file from the servers and put them in /tmp/
+ansible multi -b -m fetch -a "src=/etc/hosts dest=/tmp/ flat=yes"
+
+# Create directory
+ansible multi -m file -a "dest=/tmp/test mode=644 state=directory"
+
+# Create symlink
+ansible multi -m file -a "src=/src/file dest=/dest/symlink state=link"
+
+# Delete file directory or symlink
+ansible multi -m file -a "dest=/tmp/test state=absent"
+```
+
+```
+# Run asynchronously
+ansible multi -b -B 3600 -P 0 -a "yum -y update"
+
+# Veiw progress of job (use jid from previous commands output)
+ansible multi -b -m async_status -a "jid=729193165734.11275"
+```
+
+```
+# Veiw tail of log file
+ansible multi -b -a "tail /var/log/messages"
+
+# Count ansible commands
+ansible multi -b -m shell -a "tail /var/log/messages | grep ansible-command | wc -l"
+```
