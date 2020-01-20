@@ -106,3 +106,10 @@ ansible multi -b -a "tail /var/log/messages"
 # Count ansible commands
 ansible multi -b -m shell -a "tail /var/log/messages | grep ansible-command | wc -l"
 ```
+
+```
+# Add cron job
+ansible multi -b -m cron -a "name='daily-cron-all-servers' hour=4 job='/path/to/daily-script.sh'"
+
+# Remove cron job
+ansible multi -b -m cron -a "name='daily-cron-all-servers' state=absent"
