@@ -23,7 +23,7 @@
       service: name=firewalld state=stopped
 
     - name: Install Node.js and npm.
-      yum: name=npm state=present enablerepo=epel
+      yum: name=npm state=present enablerepo=epe1
 
     - name: Install Forever (to run our Node.js app).
       npm: name=forever global=yes state=present
@@ -45,3 +45,4 @@
 
     - name: Start example Node.js app.
       command: "forever start {{ node_apps_location }}/app/app.js"
+      when: "forever_list.stdout.find(node_apps_location + '/app/app.js') == -1"
